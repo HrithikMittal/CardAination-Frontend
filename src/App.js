@@ -17,8 +17,10 @@ class App extends Component {
     this.setState({ loading: true });
     axios
       .get("https://api.randomuser.me/?nat=US&results=5")
-      .then(users => {
-        this.setState({ users: users.data.results, loading: false });
+      .then(res => {
+        var exusers = this.state.users;
+        var totalusers = exusers.concat(res.data.results);
+        this.setState({ users: totalusers, loading: false });
       })
       .catch(err => {
         this.setState({ errors: err.message });
@@ -29,13 +31,18 @@ class App extends Component {
     this.getUsers();
   }
 
+  loadMoreUsers = () => {
+    this.getUsers();
+  };
+
   render() {
     var displayUsers = this.state.users.map(person => {
-      return <h3>{person.name.first}</h3>;
+      return <h3 key={person.cell}>{person.name.first}</h3>;
     });
     return (
       <div>
-        <div className="App">We will be back</div>
+        <button onClick={this.loadMoreUsers}>Click Me to Load More</button>
+        <div className="App">Testing</div>
         {this.state.loading ? <Loading></Loading> : displayUsers}
       </div>
     );
