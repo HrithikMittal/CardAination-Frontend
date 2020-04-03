@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+
 class Signin extends Component {
   state = {
     email: "",
     password: "",
     error: "",
-    success: false,
     redirectToReferer: false
   };
 
@@ -56,6 +57,9 @@ class Signin extends Component {
   };
 
   render() {
+    if (this.state.redirectToReferer) {
+      return <Redirect to="/" />;
+    }
     return (
       <div className="container">
         <h2 className="mt-5 mb-5">Signin</h2>
@@ -64,11 +68,6 @@ class Signin extends Component {
           <div></div>
         ) : (
           <div className="alert alert-danger">{this.state.error}</div>
-        )}
-        {!this.state.success ? (
-          <div></div>
-        ) : (
-          <div className="alert alert-primary">You are successfully Login</div>
         )}
         <form>
           <div className="form-group">
