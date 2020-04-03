@@ -1,35 +1,10 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
+import { isAuthenticated, signout } from "../auth/index";
 
 const isActive = (history, path) => {
   if (history.location.pathname === path) return { color: "#FF9900" };
   else return { color: "#FFFFFF" };
-};
-
-export const signout = next => {
-  if (typeof window != "undefined") localStorage.removeItem("jwt");
-  next();
-  return fetch("https://localhost:8080/signout", {
-    method: "GET"
-  })
-    .then(response => {
-      console.log("signout", response);
-      return response.json();
-    })
-    .catch(err => {
-      console.log(err);
-    });
-};
-
-export const isAuthenticated = () => {
-  if (typeof window == "undefined") {
-    return false;
-  }
-  if (localStorage.getItem("jwt")) {
-    return JSON.parse(localStorage.getItem("jwt"));
-  } else {
-    return false;
-  }
 };
 
 const Menu = ({ history }) => {
