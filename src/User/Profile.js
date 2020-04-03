@@ -8,26 +8,33 @@ class Profile extends Component {
     redirectToSignin: false
   };
 
-  componentDidMount() {
-    const userId = this.props.match.params.userId;
-    fetch(`${process.env.REACT_APP_API_URL}/user/${userId}`, {
+  read = (userId, token) => {
+    return fetch(`${process.env.REACT_APP_API_URL}/user/${userId}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${isAuthenticated().token}`
+        Authorization: `Bearer ${token}`
       }
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        if (data.error) {
-          this.setState({ redirectToSignin: true });
-        } else {
-          this.setState({ user: data });
-        }
-      });
+    }).then(response => {
+      return response.json();
+    });
+  };
+
+  init = userId => {
+    const token = isAuthenticated().token;
+    this.read(userId, token).then(data => {
+      if (data.error) {
+        this.setState({ redirectToSignin: true });
+      } else {
+        this.setState({ user: data });
+      }
+    });
+  };
+
+  componentDidMount() {
+    const userId = this.props.match.params.userId;
+    this.init(userId);
   }
 
   render() {
