@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+import Loading from "./Loading";
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -34,7 +36,7 @@ class App extends Component {
     return (
       <div>
         <div className="App">We will be back</div>
-        {this.state.loading ? <h3>Loading</h3> : displayUsers}
+        {this.state.loading ? <Loading></Loading> : displayUsers}
       </div>
     );
   }
