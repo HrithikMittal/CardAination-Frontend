@@ -1,13 +1,14 @@
 import React, { Component } from "react";
-import axios from "axios";
+import { BrowserRouter } from "react-router-dom";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="container">
-        <h1>React Frontend</h1>
-      </div>
-    );
-  }
-}
+import MainRouter from "./MainRouter";
+
+const App = () => {
+  return (
+    <BrowserRouter>
+      <MainRouter />
+    </BrowserRouter>
+  );
+};
+
 export default App;
