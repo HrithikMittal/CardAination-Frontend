@@ -7,6 +7,10 @@ const isActive = (history, path) => {
   else return { color: "#FFFFFF" };
 };
 
+const profile = (history, userId) => {
+  history.push(`/user/${userId}`);
+};
+
 const Menu = ({ history }) => {
   return (
     <div>
@@ -54,8 +58,13 @@ const Menu = ({ history }) => {
                 Sign Out
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link">{isAuthenticated().user.name}</a>
+            <li
+              className="nav-item"
+              onClick={() => profile(history, isAuthenticated().user._id)}
+            >
+              <a className="nav-link">{`${
+                isAuthenticated().user.name
+              }'s Profile`}</a>
             </li>
           </>
         )}
