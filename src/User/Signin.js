@@ -6,6 +6,7 @@ class Signin extends Component {
     email: "",
     password: "",
     error: "",
+    loading: false,
     redirectToReferer: false
   };
 
@@ -24,11 +25,14 @@ class Signin extends Component {
 
   clickSubmit = event => {
     event.preventDefault();
+
+    this.setState({ loading: true });
     var user = {
       email: this.state.email,
       password: this.state.password
     };
     this.signup(user).then(data => {
+      this.setState({ loading: false });
       if (data.message) {
         this.setState({ error: data.message });
       } else if (data.error) {
@@ -57,6 +61,13 @@ class Signin extends Component {
   };
 
   render() {
+    if (this.state.loading) {
+      return (
+        <div className="container">
+          <h2 className="mt-5 mb-5">Loading...</h2>
+        </div>
+      );
+    }
     if (this.state.redirectToReferer) {
       return <Redirect to="/" />;
     }
