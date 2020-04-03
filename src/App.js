@@ -41,9 +41,10 @@ class App extends Component {
     });
     return (
       <div>
-        <button onClick={this.loadMoreUsers}>Click Me to Load More</button>
-        <div className="App">Testing</div>
-        {this.state.loading ? <Loading></Loading> : displayUsers}
+        <button onClick={this.loadMoreUsers.bind(this, "Hey")}>
+          Click Me to Load More
+        </button>
+        {this.state.loading ? <Loading /> : displayUsers}
       </div>
     );
   }
